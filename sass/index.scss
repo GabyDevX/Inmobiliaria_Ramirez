@@ -1,0 +1,18 @@
+// font
+
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;600&display=swap');
+
+// Import misc
+
+@import './misc/variables';
+@import './misc/normalize';
+@import './misc/mixins';
+
+// Import partials
+
+@import './partials/header';
+@import './partials/footer';
+
+// Import views
+
+@import './views/home';

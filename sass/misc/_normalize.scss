@@ -1,0 +1,106 @@
+/* Reset */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Map de font-size
+
+$font-s: (
+  h1-desktop: 5em,
+  h2-desktop: 3.5em,
+  h3-desktop: 2.4em,
+  p-desktop: 2em,
+  h1-tablet: 4em,
+  h2-tablet: 2.5em,
+  h3-tablet: 2em,
+  p-tablet: 1.5em,
+  h1-mobile: 3.5em,
+  h2-mobile: 2.8em,
+  h3-mobile: 2.4em,
+  p-mobile: 2em,
+);
+
+/* Globales */
+
+html {
+  min-height: 100%;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 62.5%; /*10px*/
+}
+
+body {
+  font-family: inherit;
+}
+
+h1 {
+  font-size: map-get($font-s, h1-desktop);
+}
+
+h2 {
+  font-size: map-get($font-s, h2-desktop);
+}
+
+h3 {
+  font-size: map-get($font-s, h3-desktop);
+}
+
+p {
+  font-size: map-get($font-s, p-desktop);
+}
+
+//Barra lateral
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
+}
+
+// Responsive
+
+@media screen and (max-width: 1018px) {
+  h1 {
+    font-size: map-get($font-s, h1-tablet);
+  }
+
+  h2 {
+    font-size: map-get($font-s, h2-tablet);
+  }
+
+  h3 {
+    font-size: map-get($font-s, h3-tablet);
+  }
+
+  p {
+    font-size: map-get($font-s, p-tablet);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: map-get($font-s, h1-mobile);
+  }
+
+  h2 {
+    font-size: map-get($font-s, h2-mobile);
+  }
+
+  h3 {
+    font-size: map-get($font-s, h3-mobile);
+  }
+
+  p {
+    font-size: map-get($font-s, p-mobile);
+  }
+}
