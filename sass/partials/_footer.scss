@@ -1,1 +1,11 @@
 // Footer
+
+footer {
+  padding: 1rem;
+  background-color: $secondary;
+  color: #fff;
+
+  & p {
+    margin-bottom: 0 !important;
+  }
+}

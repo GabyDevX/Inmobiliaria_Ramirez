@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;600&display=swap");
 /* Variables */
 /* Reset */
 *,
@@ -6,73 +6,157 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 /* Globales */
 html {
   min-height: 100%;
   font-family: 'League Spartan', sans-serif;
   font-size: 62.5%;
-  /*10px*/
-}
+  /*10px*/ }
+
+body {
+  font-family: inherit; }
 
 h1 {
-  font-size: 5em;
-}
+  font-size: 5em; }
 
 h2 {
-  font-size: 3.5em;
-}
+  font-size: 3.5em; }
 
 h3 {
-  font-size: 2.4em;
-}
+  font-size: 2.4em; }
 
 p {
-  font-size: 2em;
-}
+  font-size: 2em; }
 
 ::-webkit-scrollbar {
-  width: 10px;
-}
+  width: 10px; }
 
 ::-webkit-scrollbar-track {
-  background: gray;
-}
+  background: gray; }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #000;
-}
+  background-color: #000; }
 
 @media screen and (max-width: 1018px) {
   h1 {
-    font-size: 4em;
-  }
+    font-size: 4em; }
   h2 {
-    font-size: 2.5em;
-  }
+    font-size: 2.5em; }
   h3 {
-    font-size: 2em;
-  }
+    font-size: 2em; }
   p {
-    font-size: 1.5em;
-  }
-}
+    font-size: 1.5em; } }
 
 @media screen and (max-width: 480px) {
   h1 {
-    font-size: 3.5em;
-  }
+    font-size: 3.5em; }
   h2 {
-    font-size: 2.8em;
-  }
+    font-size: 2.8em; }
   h3 {
-    font-size: 2.4em;
-  }
+    font-size: 2.4em; }
   p {
-    font-size: 2em;
-  }
-}
+    font-size: 2em; } }
 
 /* Helpers */
+.navbar {
+  background-color: #6b7a8f; }
+
+.nav-link {
+  color: #fff !important; }
+
+footer {
+  padding: 1rem;
+  background-color: #6b7a8f;
+  color: #fff; }
+  footer p {
+    margin-bottom: 0 !important; }
+
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #073e65;
+  color: #f1eded; }
+  .hero__title, .hero__slogan {
+    text-align: center; }
+  .hero__title {
+    font-size: 8em; }
+
+.creaDetalla {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #dcc7aa; }
+  .creaDetalla .creaPropiedad form {
+    font-size: 1.4em;
+    display: flex;
+    flex-direction: column; }
+    .creaDetalla .creaPropiedad form label {
+      color: #080707; }
+    .creaDetalla .creaPropiedad form input,
+    .creaDetalla .creaPropiedad form #tipo,
+    .creaDetalla .creaPropiedad form #objetivo {
+      height: 20px;
+      margin-bottom: 1rem;
+      border: 1px solid black;
+      border-radius: 6px;
+      padding: 2px 6px; }
+  .creaDetalla button {
+    background-color: #fff;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%; }
+  .creaDetalla .separador {
+    height: 40rem;
+    width: 0.5rem;
+    background-color: #073e65; }
+  .creaDetalla .texto__resumen {
+    margin-bottom: 1rem; }
+  .creaDetalla .detallePropiedades {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem; }
+
+.alquileres,
+.ventas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: #073e65; }
+  .alquileres .propiedades__link,
+  .ventas .propiedades__link {
+    padding: 1rem;
+    font-size: 1.5em;
+    width: 30%; }
+
+.ventas {
+  background-color: #dcc7aa; }
+
+.alquileres__listado,
+.ventas__listado {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; }
+
+.propiedad {
+  padding: 1rem;
+  margin: 1rem; }
+  .propiedad__link {
+    background-color: #276b6b;
+    border-color: #276b6b; }
+    .propiedad__link:hover {
+      background-color: #276b6b;
+      border-color: #276b6b; }

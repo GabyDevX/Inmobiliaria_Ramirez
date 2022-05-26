@@ -11,18 +11,18 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Inmobiliaria_Ramirez</title>
+    <title>Inicio | Inmobiliaria Ramirez</title>
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-md bg-light navbar-light">
-        <div class="container-fluid">
+      <nav class="navbar navbar-expand-md navbar-light fixed-top">
+        <div class="container-fluid d-flex justify-content-between">
           <a class="navbar-brand" href="index.html">
             <img
               class="nav-logo"
               src="images/Logo.jpg"
               alt="logo teknosun_spa"
-              style="height: 40px; width: auto;"
+              style="height: 70px; width: auto;"
             />
           </a>
           <button
@@ -34,17 +34,111 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav m-auto mb-lg-0 gap-5">
+            <ul class="navbar-nav ms-auto mb-lg-0 gap-5 fs-2">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Inicio</a>
+                <a class="nav-link" href="#">Inicio</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="root/alquileres.html">Alquileres</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="root/ventas.html">Ventas</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="index.html">Inicio</a>
+              </li> -->
             </ul>
           </div>
         </div>
       </nav>
     </header>
     <main>
-      <h1>Inmobiliaria</h1>
+      <section class="hero">
+        <h1 class="hero__title">Inmobiliaria</h1>
+        <p class="hero__slogan">slogan</p>
+      </section>
+      <section class="creaDetalla">
+        <article class="creaPropiedad">
+          <h2>Crea una propiedad a continuación</h2>
+          <form action="">
+            <label for="objetivo">Objetivo</label>
+            <select name="objetivo" id="objetivo">
+              <option>Alquiler</option>
+              <option>Venta</option>
+            </select>
+            <label for="tipo">Tipo de propiedad</label>
+            <select name="tipo" id="tipo">
+              <option>Apartamento</option>
+              <option>Casa</option>
+            </select>
+            <label for="direccion">Dirección</label>
+            <input type="text" name="direccion" id="direccion" />
+            <label for="habitaciones">Número de habitaciones</label>
+            <input type="number" name="habitaciones" id="habitaciones" />
+            <label for="baños">Número de baños</label>
+            <input type="number" name="baños" id="baños" />
+            <label for="precio">Precio</label>
+            <input type="number" name="precio" id="precio" />
+            <label for="extras">Extras</label>
+            <input type="text" name="extras" id="extras" />
+          </form>
+          <button id="crear">
+            Agregar propiedad
+          </button>
+        </article>
+        <div class="separador"></div>
+        <article class="detallePropiedades">
+          <h2>Resumen de propiedades</h2>
+          <div class="texto">
+            <h3 class="texto__resumen">
+              Contamos con un total de
+              <span id="propiedadesCantidad"></span>
+              propiedades en donde:
+            </h3>
+            <h3>
+              Tenemos un total de
+              <span id="ventaCantidad"></span>
+              en venta
+            </h3>
+            <p>
+              los precios van desde U$S
+              <span id="ventaMinimo">40000</span>
+              hasta U$S
+              <span id="ventaMaximo">120000</span>
+            </p>
+            <h3>
+              Tenemos un total de
+              <span id="alquilerCantidad"></span>
+              en alquiler
+            </h3>
+            <p>
+              los precios van desde UYU
+              <span id="alquilerMinimo">12000</span>
+              hasta
+              <span id="alquilerMaximo">30000</span>
+              por mes
+            </p>
+          </div>
+        </article>
+      </section>
+      <section class="propiedades">
+        <article class="alquileres">
+          <h2>Propiedades en Alquiler</h2>
+          <div
+            class="alquileres__listado container-fluid row"
+            id="alquileres__listado"
+          ></div>
+          <a class="propiedades__link btn btn-primary" href="#">Ver todas</a>
+        </article>
+        <article class="ventas">
+          <h2>Propiedades en Venta</h2>
+          <div
+            class="ventas__listado container-fluid row"
+            id="ventas__listado"
+          ></div>
+          <a class="propiedades__link btn btn-primary" href="#">Ver todas</a>
+        </article>
+      </section>
     </main>
     <footer>
       <p>Inmobiliaria</p>
