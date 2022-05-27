@@ -16,7 +16,13 @@ const alquilerMinimo = document.getElementById('alquilerMinimo')
 const alquilerMaximo = document.getElementById('alquilerMaximo')
 
 const listaAlquileres = document.getElementById('alquileres__listado')
+const alquileresExpandir = document.getElementById('alquileres__btn')
+const alquileresMinimizar = document.getElementById('alquileres__btn2')
 const listaVentas = document.getElementById('ventas__listado')
+const ventasExpandir = document.getElementById('ventas__btn')
+const ventasMinimizar = document.getElementById('ventas__btn2')
+
+//Seleccionar los valores de los campos dentro de los formularios de las secciones para realizar un filtro
 
 let propiedades = []
 const alquileres = []
@@ -156,6 +162,41 @@ crearBtn.addEventListener('click', () => {
   renderizarResumen()
 })
 
+// Se crean los eventos y se asignan a los botones de los listados para expandirlas
+// Unir los botones y poner condicional con nombre de clase
+
+alquileresExpandir.addEventListener('click', (event) => {
+  event.preventDefault()
+  listaAlquileres.innerHTML = ''
+  for (const alquiler of alquileres) {
+    listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+  }
+})
+
+alquileresMinimizar.addEventListener('click', (event) => {
+  // event.preventDefault()
+  listaAlquileres.innerHTML = ''
+  for (const alquiler of principalesAlquileres) {
+    listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+  }
+})
+
+ventasExpandir.addEventListener('click', (event) => {
+  event.preventDefault()
+  listaVentas.innerHTML = ''
+  for (const venta of ventas) {
+    listaVentas.appendChild(plantillaPropiedad(venta))
+  }
+})
+
+ventasMinimizar.addEventListener('click', (event) => {
+  // event.preventDefault()
+  listaVentas.innerHTML = ''
+  for (const venta of principalesVentas) {
+    listaVentas.appendChild(plantillaPropiedad(venta))
+  }
+})
+
 // Clase propiedad con su constructor y un metodo el cual se utilizará para dar el detalle del precio en función de si la propiedad es para venta o para alquiler
 
 class Propiedad {
@@ -184,7 +225,7 @@ class Propiedad {
 
 crearPropiedad(
   'alquiler',
-  'apto',
+  'apartamento',
   'canales 1268',
   2,
   1,
@@ -265,15 +306,53 @@ crearPropiedad(
   'patio, garage',
 )
 crearPropiedad('venta', 'casa', 'orbes 1523', 5, 2, 102000, 'patio')
-crearPropiedad('alquiler', 'apartamento', 'pintado 1263', 3, 1, 25000, 'garage')
+crearPropiedad('alquiler', 'apartamento', 'pintado 1263', 3, 1, 21000, 'garage')
+crearPropiedad('venta', 'apartamento', 'luna 7436', 5, 2, 120000, 'patio')
+crearPropiedad('alquiler', 'apartamento', 'fundas 7081', 3, 1, 22000, 'balcon')
+crearPropiedad('venta', 'apartamento', 'antimano 2309', 5, 2, 217000, 'patio')
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'cigales 1299',
+  3,
+  1,
+  26000,
+  'garage, patio',
+)
+crearPropiedad('venta', 'casa', 'alaces 5278', 5, 2, 100000, 'patio')
+crearPropiedad('alquiler', 'casa', 'linares 2312', 3, 1, 22000, 'garage')
+crearPropiedad('venta', 'casa', 'colinas 2308', 5, 2, 92000, 'patio')
+crearPropiedad('alquiler', 'casa', 'propios 983', 3, 1, 29000, 'garage, patio')
+crearPropiedad('venta', 'casa', 'gines 9725', 5, 2, 80000, 'patio')
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'viñas 4912',
+  3,
+  1,
+  18000,
+  'garage, patio',
+)
+crearPropiedad('venta', 'apartamento', 'cantes 2281', 5, 2, 78000, 'balcon')
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'agraciada 4030',
+  3,
+  1,
+  30000,
+  'garage',
+)
 
-// Por cada propiedad dentro de la lista, se añadirá una estructura HTML creada con la función en base a la propiedad que se esté iterando en ese momento.
+// Por cada propiedad dentro de la lista filtrada, se añadirá una estructura HTML creada con la función en base a la propiedad que se esté iterando en ese momento.
 
-for (const alquiler of alquileres) {
+const principalesAlquileres = alquileres.slice(0, 6)
+for (const alquiler of principalesAlquileres) {
   listaAlquileres.appendChild(plantillaPropiedad(alquiler))
 }
 
-for (const venta of ventas) {
+const principalesVentas = ventas.slice(0, 6)
+for (const venta of principalesVentas) {
   listaVentas.appendChild(plantillaPropiedad(venta))
 }
 

@@ -17,7 +17,7 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top">
         <div class="container-fluid d-flex justify-content-between">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="#">
             <img
               class="nav-logo"
               src="images/Logo.jpg"
@@ -39,10 +39,10 @@
                 <a class="nav-link" href="#">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="root/alquileres.html">Alquileres</a>
+                <a class="nav-link" href="#alquileres">Alquileres</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="root/ventas.html">Ventas</a>
+                <a class="nav-link" href="#ventas">Ventas</a>
               </li>
               <!-- <li class="nav-item">
                 <a class="nav-link" href="index.html">Inicio</a>
@@ -122,21 +122,77 @@
         </article>
       </section>
       <section class="propiedades">
-        <article class="alquileres">
+        <article class="alquileres" id="alquileres">
           <h2>Propiedades en Alquiler</h2>
+          <form class="alquileres__form">
+            <input type="number" id="alquileres__minimo" placeholder="desde" />
+            <input type="number" id="alquileres__maximo" placeholder="hasta" />
+            <select
+              name="alquileres__orden"
+              class="orden"
+              id="alquileres__orden"
+            >
+              <option>Menor a mayor precio</option>
+              <option>Mayor a menor precio</option>
+            </select>
+          </form>
+          <button class="alquileres__filtro" id="alquileres__filtro">
+            Buscar
+          </button>
           <div
             class="alquileres__listado container-fluid row"
             id="alquileres__listado"
           ></div>
-          <a class="propiedades__link btn btn-primary" href="#">Ver todas</a>
+          <div class="botones">
+            <a
+              class="propiedades__link alq btn btn-primary"
+              id="alquileres__btn"
+              href=""
+            >
+              Ver más
+            </a>
+            <a
+              class="propiedades__link btn btn-secondary"
+              id="alquileres__btn2"
+              href="#alquileres"
+            >
+              Ver menos
+            </a>
+          </div>
         </article>
-        <article class="ventas">
+        <article class="ventas" id="ventas">
           <h2>Propiedades en Venta</h2>
+          <form class="ventas__form">
+            <input type="number" id="ventas__minimo" placeholder="desde" />
+            <input type="number" id="ventas__maximo" placeholder="hasta" />
+            <select name="ventas__orden" class="orden" id="ventas__orden">
+              <option>Menor a mayor precio</option>
+              <option>Mayor a menor precio</option>
+            </select>
+          </form>
+          <button class="ventas__filtro" id="ventas__filtro">
+            Buscar
+          </button>
           <div
             class="ventas__listado container-fluid row"
             id="ventas__listado"
           ></div>
-          <a class="propiedades__link btn btn-primary" href="#">Ver todas</a>
+          <div class="botones">
+            <a
+              class="propiedades__link ven btn btn-primary"
+              id="ventas__btn"
+              href=""
+            >
+              Ver más
+            </a>
+            <a
+              class="propiedades__link btn btn-secondary"
+              id="ventas__btn2"
+              href="#ventas"
+            >
+              Ver menos
+            </a>
+          </div>
         </article>
       </section>
     </main>

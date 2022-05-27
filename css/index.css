@@ -136,14 +136,46 @@ footer {
   gap: 1rem;
   padding: 2rem;
   background-color: #073e65; }
-  .alquileres .propiedades__link,
-  .ventas .propiedades__link {
-    padding: 1rem;
-    font-size: 1.5em;
-    width: 30%; }
+  .alquileres__form,
+  .ventas__form {
+    font-size: 1.4em; }
+    .alquileres__form input,
+    .alquileres__form .orden,
+    .ventas__form input,
+    .ventas__form .orden {
+      height: 20px;
+      margin-bottom: 1rem;
+      border: 1px solid black;
+      border-radius: 6px;
+      padding: 2px 6px; }
+  .alquileres__filtro,
+  .ventas__filtro {
+    background-color: #fff;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 5px 10px;
+    min-width: 20%; }
+  .alquileres .botones,
+  .ventas .botones {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    gap: 1rem;
+    justify-content: center; }
+    .alquileres .botones .propiedades__link,
+    .ventas .botones .propiedades__link {
+      padding: 1rem;
+      font-size: 1.5em;
+      max-width: 100%;
+      min-width: 40%; }
 
 .ventas {
-  background-color: #dcc7aa; }
+  background-color: #dcc7aa;
+  color: #073e65; }
+
+.alquileres {
+  color: #dcc7aa; }
 
 .alquileres__listado,
 .ventas__listado {
@@ -152,11 +184,12 @@ footer {
   align-items: stretch; }
 
 .propiedad {
+  color: #080707;
   padding: 1rem;
   margin: 1rem; }
   .propiedad__link {
-    background-color: #276b6b;
-    border-color: #276b6b; }
+    background-color: #6b7a8f;
+    border-color: #6b7a8f; }
     .propiedad__link:hover {
-      background-color: #276b6b;
-      border-color: #276b6b; }
+      background-color: #6b7a8f;
+      border-color: #6b7a8f; }
