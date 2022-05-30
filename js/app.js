@@ -170,13 +170,12 @@ crearBtn.addEventListener('click', () => {
     monedaPrecio,
     valorExtras.value.toLowerCase(),
   )
-  console.log(monedaPrecio)
   clean()
 
-  for (const alquiler of alquileres) {
+  for (const alquiler of principalesAlquileres) {
     listaAlquileres.appendChild(plantillaPropiedad(alquiler))
   }
-  for (const venta of ventas) {
+  for (const venta of principalesVentas) {
     listaVentas.appendChild(plantillaPropiedad(venta))
   }
   renderizarResumen()
