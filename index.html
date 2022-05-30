@@ -78,7 +78,19 @@
             <label for="baños">Número de baños</label>
             <input type="number" name="baños" id="baños" />
             <label for="precio">Precio</label>
-            <input type="number" name="precio" id="precio" />
+            <div>
+              <input type="number" name="precio" id="precio" />
+              <input
+                type="radio"
+                id="moneda1"
+                name="moneda"
+                value="uyu"
+                checked
+              />
+              <label for="moneda1">UYU</label>
+              <input type="radio" id="moneda2" name="moneda" value="usd" />
+              <label for="moneda2">U$S</label>
+            </div>
             <label for="extras">Extras</label>
             <input type="text" name="extras" id="extras" />
           </form>
@@ -125,8 +137,18 @@
         <article class="alquileres" id="alquileres">
           <h2>Propiedades en Alquiler</h2>
           <form class="alquileres__form">
-            <input type="number" id="alquileres__minimo" placeholder="desde" />
-            <input type="number" id="alquileres__maximo" placeholder="hasta" />
+            <input
+              type="number"
+              id="alquileres__minimo"
+              placeholder="desde"
+              value="1"
+            />
+            <input
+              type="number"
+              id="alquileres__maximo"
+              placeholder="hasta"
+              value="1000000"
+            />
             <select
               name="alquileres__orden"
               class="orden"
@@ -136,7 +158,11 @@
               <option>Mayor a menor precio</option>
             </select>
           </form>
-          <button class="alquileres__filtro" id="alquileres__filtro">
+          <button
+            class="alquileres__filtro"
+            id="alquileres__filtro"
+            href="#alquileres"
+          >
             Buscar
           </button>
           <div
@@ -163,14 +189,24 @@
         <article class="ventas" id="ventas">
           <h2>Propiedades en Venta</h2>
           <form class="ventas__form">
-            <input type="number" id="ventas__minimo" placeholder="desde" />
-            <input type="number" id="ventas__maximo" placeholder="hasta" />
+            <input
+              type="number"
+              id="ventas__minimo"
+              placeholder="desde"
+              value="1"
+            />
+            <input
+              type="number"
+              id="ventas__maximo"
+              placeholder="hasta"
+              value="1000000"
+            />
             <select name="ventas__orden" class="orden" id="ventas__orden">
               <option>Menor a mayor precio</option>
               <option>Mayor a menor precio</option>
             </select>
           </form>
-          <button class="ventas__filtro" id="ventas__filtro">
+          <button class="ventas__filtro" id="ventas__filtro" href="#ventas">
             Buscar
           </button>
           <div

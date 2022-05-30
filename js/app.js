@@ -4,6 +4,7 @@ const valorDireccion = document.getElementById('direccion')
 const valorHabitaciones = document.getElementById('habitaciones')
 const valorBaños = document.getElementById('baños')
 const valorPrecio = document.getElementById('precio')
+const moneda = document.getElementsByName('moneda')
 const valorExtras = document.getElementById('extras')
 const crearBtn = document.getElementById('crear')
 
@@ -22,6 +23,15 @@ const listaVentas = document.getElementById('ventas__listado')
 const ventasExpandir = document.getElementById('ventas__btn')
 const ventasMinimizar = document.getElementById('ventas__btn2')
 
+const alquileresMinimo = document.getElementById('alquileres__minimo')
+const alquileresMaximo = document.getElementById('alquileres__maximo')
+const alquileresOrden = document.getElementById('alquileres__orden')
+const alquileresFiltro = document.getElementById('alquileres__filtro')
+const ventasMinimo = document.getElementById('ventas__minimo')
+const ventasMaximo = document.getElementById('ventas__maximo')
+const ventasOrden = document.getElementById('ventas__orden')
+const ventasFiltro = document.getElementById('ventas__filtro')
+
 //Seleccionar los valores de los campos dentro de los formularios de las secciones para realizar un filtro
 
 let propiedades = []
@@ -37,6 +47,7 @@ const crearPropiedad = (
   habitaciones,
   baños,
   precio,
+  moneda,
   extras,
 ) => {
   if (estado === 'alquiler') {
@@ -48,6 +59,7 @@ const crearPropiedad = (
         habitaciones,
         baños,
         precio,
+        moneda,
         extras,
       ),
     )
@@ -60,6 +72,7 @@ const crearPropiedad = (
         habitaciones,
         baños,
         precio,
+        moneda,
         extras,
       ),
     )
@@ -141,6 +154,12 @@ const clean = () => {
 // Se le asigna un evento para cuando se haga click en el botón seleccionado, el cual ejecuta una función que lee los valores de los campos del formulario y los utiliza para pasarlos como parametro de la función utilizada para crear las propiedades, limpia lo anteriormente renderizado y vuelve a mostrar los datos actualizados
 
 crearBtn.addEventListener('click', () => {
+  let monedaPrecio
+  for (let i = 0; i < moneda.length; i++) {
+    if (moneda[i].checked) {
+      monedaPrecio = moneda[i].value
+    }
+  }
   crearPropiedad(
     valorObjetivo.value.toLowerCase(),
     valorTipo.value.toLowerCase(),
@@ -148,9 +167,10 @@ crearBtn.addEventListener('click', () => {
     valorHabitaciones.value,
     valorBaños.value,
     valorPrecio.value,
+    monedaPrecio,
     valorExtras.value.toLowerCase(),
   )
-
+  console.log(monedaPrecio)
   clean()
 
   for (const alquiler of alquileres) {
@@ -197,22 +217,69 @@ ventasMinimizar.addEventListener('click', (event) => {
   }
 })
 
+alquileresFiltro.addEventListener('click', (event) => {
+  event.preventDefault()
+  const alquileresFiltrado = alquileres
+    .filter(
+      (el) =>
+        el.precio >= alquileresMinimo.value &&
+        el.precio <= alquileresMaximo.value,
+    )
+    .sort((a, b) =>
+      alquileresOrden.value.toLowerCase() == 'menor a mayor precio'
+        ? a.precio - b.precio
+        : b.precio - a.precio,
+    )
+  listaAlquileres.innerHTML = ''
+  for (const alquiler of alquileresFiltrado) {
+    listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+  }
+})
+
+ventasFiltro.addEventListener('click', (event) => {
+  event.preventDefault()
+  const ventasFiltrado = ventas
+    .filter(
+      (el) =>
+        el.precio >= ventasMinimo.value && el.precio <= ventasMaximo.value,
+    )
+    .sort((a, b) =>
+      ventasOrden.value.toLowerCase() == 'menor a mayor precio'
+        ? a.precio - b.precio
+        : b.precio - a.precio,
+    )
+  listaVentas.innerHTML = ''
+  for (const venta of ventasFiltrado) {
+    listaVentas.appendChild(plantillaPropiedad(venta))
+  }
+})
+
 // Clase propiedad con su constructor y un metodo el cual se utilizará para dar el detalle del precio en función de si la propiedad es para venta o para alquiler
 
 class Propiedad {
-  constructor(estado, tipo, direccion, habitaciones, baños, precio, extras) {
+  constructor(
+    estado,
+    tipo,
+    direccion,
+    habitaciones,
+    baños,
+    precio,
+    moneda,
+    extras,
+  ) {
     this.estado = estado
     this.tipo = tipo
     this.direccion = direccion
     this.habitaciones = habitaciones
     this.baños = baños
     this.precio = precio
+    this.moneda = moneda
     this.extras = extras
   }
 
   darPrecio() {
     let str
-    if (this.estado == 'venta') {
+    if (this.moneda == 'usd') {
       str = 'U$S ' + this.precio
       return str
     }
@@ -230,6 +297,7 @@ crearPropiedad(
   2,
   1,
   17000,
+  'uyu',
   'terraza, garage',
 )
 crearPropiedad(
@@ -239,6 +307,7 @@ crearPropiedad(
   5,
   2,
   270000,
+  'usd',
   'patio, terraza, garage, sotano',
 )
 crearPropiedad(
@@ -248,6 +317,7 @@ crearPropiedad(
   4,
   2,
   30000,
+  'uyu',
   'patio, garage',
 )
 crearPropiedad(
@@ -257,6 +327,7 @@ crearPropiedad(
   3,
   1,
   120000,
+  'usd',
   'garage, parrillero, balcón, piscina compartida',
 )
 crearPropiedad(
@@ -266,9 +337,19 @@ crearPropiedad(
   4,
   2,
   140000,
+  'usd',
   'patio, terraza, garage',
 )
-crearPropiedad('alquiler', 'apartamento', 'soles 2347', 2, 1, 19000, 'balcon')
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'soles 2347',
+  2,
+  1,
+  19000,
+  'uyu',
+  'balcon',
+)
 crearPropiedad(
   'venta',
   'apartamento',
@@ -276,6 +357,7 @@ crearPropiedad(
   1,
   1,
   90000,
+  'usd',
   'terraza, garage',
 )
 crearPropiedad(
@@ -285,6 +367,7 @@ crearPropiedad(
   4,
   2,
   29500,
+  'uyu',
   'patio, terraza, garage, parrillero',
 )
 crearPropiedad(
@@ -294,6 +377,7 @@ crearPropiedad(
   6,
   3,
   190000,
+  'usd',
   'patio, terraza, garage, parrillero, piscina',
 )
 crearPropiedad(
@@ -303,13 +387,50 @@ crearPropiedad(
   4,
   2,
   35000,
+  'uyu',
   'patio, garage',
 )
-crearPropiedad('venta', 'casa', 'orbes 1523', 5, 2, 102000, 'patio')
-crearPropiedad('alquiler', 'apartamento', 'pintado 1263', 3, 1, 21000, 'garage')
-crearPropiedad('venta', 'apartamento', 'luna 7436', 5, 2, 120000, 'patio')
-crearPropiedad('alquiler', 'apartamento', 'fundas 7081', 3, 1, 22000, 'balcon')
-crearPropiedad('venta', 'apartamento', 'antimano 2309', 5, 2, 217000, 'patio')
+crearPropiedad('venta', 'casa', 'orbes 1523', 5, 2, 102000, 'usd', 'patio')
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'pintado 1263',
+  3,
+  1,
+  21000,
+  'uyu',
+  'garage',
+)
+crearPropiedad(
+  'venta',
+  'apartamento',
+  'luna 7436',
+  5,
+  2,
+  120000,
+  'usd',
+  'patio',
+)
+crearPropiedad(
+  'alquiler',
+  'apartamento',
+  'fundas 7081',
+  3,
+  1,
+  22000,
+  'uyu',
+  'balcon',
+)
+crearPropiedad(
+  'venta',
+  'apartamento',
+  'antimano 2309',
+  5,
+  2,
+  217000,
+  'usd',
+  'patio',
+)
 crearPropiedad(
   'alquiler',
   'apartamento',
@@ -317,13 +438,23 @@ crearPropiedad(
   3,
   1,
   26000,
+  'uyu',
   'garage, patio',
 )
-crearPropiedad('venta', 'casa', 'alaces 5278', 5, 2, 100000, 'patio')
-crearPropiedad('alquiler', 'casa', 'linares 2312', 3, 1, 22000, 'garage')
-crearPropiedad('venta', 'casa', 'colinas 2308', 5, 2, 92000, 'patio')
-crearPropiedad('alquiler', 'casa', 'propios 983', 3, 1, 29000, 'garage, patio')
-crearPropiedad('venta', 'casa', 'gines 9725', 5, 2, 80000, 'patio')
+crearPropiedad('venta', 'casa', 'alaces 5278', 5, 2, 100000, 'usd', 'patio')
+crearPropiedad('alquiler', 'casa', 'linares 2312', 3, 1, 22000, 'uyu', 'garage')
+crearPropiedad('venta', 'casa', 'colinas 2308', 5, 2, 92000, 'usd', 'patio')
+crearPropiedad(
+  'alquiler',
+  'casa',
+  'propios 983',
+  3,
+  1,
+  29000,
+  'uyu',
+  'garage, patio',
+)
+crearPropiedad('venta', 'casa', 'gines 9725', 5, 2, 80000, 'usd', 'patio')
 crearPropiedad(
   'alquiler',
   'apartamento',
@@ -331,9 +462,19 @@ crearPropiedad(
   3,
   1,
   18000,
+  'uyu',
   'garage, patio',
 )
-crearPropiedad('venta', 'apartamento', 'cantes 2281', 5, 2, 78000, 'balcon')
+crearPropiedad(
+  'venta',
+  'apartamento',
+  'cantes 2281',
+  5,
+  2,
+  78000,
+  'usd',
+  'balcon',
+)
 crearPropiedad(
   'alquiler',
   'apartamento',
@@ -341,6 +482,7 @@ crearPropiedad(
   3,
   1,
   30000,
+  'uyu',
   'garage',
 )
 

@@ -45,6 +45,12 @@
       border-radius: 6px;
       padding: 2px 6px;
     }
+
+    & div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
   }
   & button {
     background-color: #fff;
@@ -80,8 +86,11 @@
   align-items: center;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
+  padding: 6rem 2rem;
   background-color: $blue;
+  & h2 {
+    margin-top: 3rem;
+  }
   &__form {
     font-size: 1.4em;
     & input,
