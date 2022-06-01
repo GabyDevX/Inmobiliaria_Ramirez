@@ -32,7 +32,8 @@ const ventasMaximo = document.getElementById('ventas__maximo')
 const ventasOrden = document.getElementById('ventas__orden')
 const ventasFiltro = document.getElementById('ventas__filtro')
 
-//Seleccionar los valores de los campos dentro de los formularios de las secciones para realizar un filtro
+const wishIcon = document.getElementById('wishIcon')
+let wishCount = 0
 
 let propiedades = []
 const alquileres = []
@@ -251,6 +252,10 @@ ventasFiltro.addEventListener('click', (event) => {
   for (const venta of ventasFiltrado) {
     listaVentas.appendChild(plantillaPropiedad(venta))
   }
+})
+
+wishIcon.addEventListener('click', () => {
+  confirm('Quiero mas informacion de estas ' + wishCount + ' propiedades')
 })
 
 // Clase propiedad con su constructor y un metodo el cual se utilizará para dar el detalle del precio en función de si la propiedad es para venta o para alquiler
@@ -500,3 +505,15 @@ for (const venta of principalesVentas) {
 // Se llama a la función para que se ejecute al abrir la página
 
 renderizarResumen()
+
+// Si selecciono estos elementos antes de que se añadan al html, no me guarda ninguno
+// Pero no sé como hacer que funcione en las nuevas propiedades creadas desde la aplicacion
+const addWish = document.querySelectorAll('.propiedad__link')
+
+addWish.forEach((wish) => {
+  wish.addEventListener('click', (event) => {
+    event.preventDefault()
+    wishCount++
+    alert(event.target.parentNode.innerText)
+  })
+})

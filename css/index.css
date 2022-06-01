@@ -61,7 +61,15 @@ p {
 
 /* Helpers */
 .navbar {
-  background-color: #6b7a8f; }
+  background-color: #6b7a8f;
+  padding: 1rem 5rem; }
+  .navbar .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; }
+    .navbar .icon:hover {
+      cursor: pointer; }
 
 .nav-link {
   color: #fff !important; }
