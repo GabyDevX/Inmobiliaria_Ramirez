@@ -80,12 +80,18 @@ footer {
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-  background-color: #073e65;
-  color: #f1eded; }
+  background-image: url(../../images/background-hero.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #080707; }
   .hero__title, .hero__slogan {
     text-align: center; }
   .hero__title {
     font-size: 8em; }
+  .hero__slogan {
+    font-size: 5rem; }
 
 .creaDetalla {
   padding: 2rem;

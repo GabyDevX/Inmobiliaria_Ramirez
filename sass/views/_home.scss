@@ -7,14 +7,22 @@
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-  background-color: $blue;
-  color: rgb(241, 237, 237);
+  // background-color: $blue;
+  background-image: url(../../images/background-hero.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #080707;
   &__title,
   &__slogan {
     text-align: center;
   }
   &__title {
     font-size: 8em;
+  }
+  &__slogan {
+    font-size: 5rem;
   }
 }
 
