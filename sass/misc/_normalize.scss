@@ -53,6 +53,14 @@ p {
   font-size: map-get($font-s, p-desktop);
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+}
+
 //Barra lateral
 
 ::-webkit-scrollbar {

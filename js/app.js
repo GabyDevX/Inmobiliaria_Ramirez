@@ -8,6 +8,8 @@ const moneda = document.getElementsByName('moneda')
 const valorExtras = document.getElementById('extras')
 const crearBtn = document.getElementById('crear')
 
+let id = 0
+
 const propiedadesCantidad = document.getElementById('propiedadesCantidad')
 const ventaCantidad = document.getElementById('ventaCantidad')
 const alquilerCantidad = document.getElementById('alquilerCantidad')
@@ -32,12 +34,16 @@ const ventasMaximo = document.getElementById('ventas__maximo')
 const ventasOrden = document.getElementById('ventas__orden')
 const ventasFiltro = document.getElementById('ventas__filtro')
 
+const buttonList = document.getElementById('propiedades')
 const wishIcon = document.getElementById('wishIcon')
-let wishCount = 0
+const modal = document.getElementById('modal')
+const carritoVista = document.getElementById('carrito__vista')
+const carritoClose = document.getElementById('carrito__close')
 
 let propiedades = []
 const alquileres = []
 const ventas = []
+const carrito = []
 
 // Funcion utilizada para crear las propiedades, toma los valores por parametro y luego en base al tipo de propiedad utiliza al constructor de la clase Propiedad y la añade a su respectiva lista, luego la lista general de propiedades es el resultado de la concatenación de las listas de ventas y alquileres
 
@@ -139,9 +145,34 @@ const plantillaPropiedad = (prop) => {
                         ${prop.extras}
                       </li>
                     </ul>
-                    <a href="#" class="propiedad__link fs-5 btn btn-primary">
+                    <a href="#" data-id="${
+                      prop.id
+                    }" class="propiedad__link fs-5 btn btn-primary">
                       Agregar a favoritos
                     </a>`
+  return elemento
+}
+const plantillaCarrito = (prop) => {
+  let elemento = document.createElement('div')
+  elemento.className = 'propiedad card col-sm-12 col-md-3 col-lg-2'
+  elemento.innerHTML = `<img
+                      src="images/casa-ejemplo.jpg"
+                      class="propiedad__imagen card-img-top"
+                      alt="..."
+                    />
+                    <div class="propiedad__contenido card-body">
+                      <h5 class="propiedad__resumen card-title">${
+                        prop.tipo
+                      } en ${prop.estado}</h5>
+                      <p class="propiedad__ubicacion card-text fs-2">
+                        ${prop.direccion}
+                      </p>
+                    </div>
+                    
+                      <li class="propiedad__item propiedad__item-precio list-group-item">
+                        ${prop.darPrecio()}
+                      </li>
+                    </ul>`
   return elemento
 }
 
@@ -173,11 +204,24 @@ crearBtn.addEventListener('click', () => {
   )
   clean()
 
-  for (const alquiler of principalesAlquileres) {
-    listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+  if (listaAlquileres.classList.contains('principal')) {
+    for (const alquiler of alquileres) {
+      listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+    }
+  } else {
+    for (const alquiler of principalesAlquileres) {
+      listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+    }
   }
-  for (const venta of principalesVentas) {
-    listaVentas.appendChild(plantillaPropiedad(venta))
+
+  if (listaVentas.classList.contains('principal')) {
+    for (const venta of ventas) {
+      listaVentas.appendChild(plantillaPropiedad(venta))
+    }
+  } else {
+    for (const venta of principalesVentas) {
+      listaVentas.appendChild(plantillaPropiedad(venta))
+    }
   }
   renderizarResumen()
 })
@@ -188,6 +232,7 @@ crearBtn.addEventListener('click', () => {
 alquileresExpandir.addEventListener('click', (event) => {
   event.preventDefault()
   listaAlquileres.innerHTML = ''
+  listaAlquileres.classList.add('principal')
   for (const alquiler of alquileres) {
     listaAlquileres.appendChild(plantillaPropiedad(alquiler))
   }
@@ -196,6 +241,7 @@ alquileresExpandir.addEventListener('click', (event) => {
 alquileresMinimizar.addEventListener('click', (event) => {
   // event.preventDefault()
   listaAlquileres.innerHTML = ''
+  listaAlquileres.classList.remove('principal')
   for (const alquiler of principalesAlquileres) {
     listaAlquileres.appendChild(plantillaPropiedad(alquiler))
   }
@@ -204,6 +250,7 @@ alquileresMinimizar.addEventListener('click', (event) => {
 ventasExpandir.addEventListener('click', (event) => {
   event.preventDefault()
   listaVentas.innerHTML = ''
+  listaVentas.classList.add('principal')
   for (const venta of ventas) {
     listaVentas.appendChild(plantillaPropiedad(venta))
   }
@@ -212,6 +259,7 @@ ventasExpandir.addEventListener('click', (event) => {
 ventasMinimizar.addEventListener('click', (event) => {
   // event.preventDefault()
   listaVentas.innerHTML = ''
+  listaVentas.classList.remove('principal')
   for (const venta of principalesVentas) {
     listaVentas.appendChild(plantillaPropiedad(venta))
   }
@@ -254,9 +302,27 @@ ventasFiltro.addEventListener('click', (event) => {
   }
 })
 
-wishIcon.addEventListener('click', () => {
-  confirm('Quiero mas informacion de estas ' + wishCount + ' propiedades')
+buttonList.addEventListener('click', (event) => {
+  event.preventDefault()
+  if (
+    event.target &&
+    event.target.tagName === 'A' &&
+    event.target.classList.contains('propiedad__link')
+  ) {
+    const element = event.target.getAttribute('data-id')
+    carrito.push(propiedades.find((el) => el.id == element))
+  }
+  carritoVista.innerHTML = ''
+  for (const prop of carrito) {
+    carritoVista.appendChild(plantillaCarrito(prop))
+  }
 })
+
+wishIcon.addEventListener('click', () => {
+  modal.classList.toggle('hidden')
+})
+
+carritoClose.addEventListener('click', () => modal.classList.toggle('hidden'))
 
 // Clase propiedad con su constructor y un metodo el cual se utilizará para dar el detalle del precio en función de si la propiedad es para venta o para alquiler
 
@@ -271,6 +337,7 @@ class Propiedad {
     moneda,
     extras,
   ) {
+    this.id = ++id
     this.estado = estado
     this.tipo = tipo
     this.direccion = direccion
@@ -505,15 +572,3 @@ for (const venta of principalesVentas) {
 // Se llama a la función para que se ejecute al abrir la página
 
 renderizarResumen()
-
-// Si selecciono estos elementos antes de que se añadan al html, no me guarda ninguno
-// Pero no sé como hacer que funcione en las nuevas propiedades creadas desde la aplicacion
-const addWish = document.querySelectorAll('.propiedad__link')
-
-addWish.forEach((wish) => {
-  wish.addEventListener('click', (event) => {
-    event.preventDefault()
-    wishCount++
-    alert(event.target.parentNode.innerText)
-  })
-})

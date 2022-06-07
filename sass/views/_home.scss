@@ -163,3 +163,29 @@
     }
   }
 }
+
+.carrito {
+  position: absolute;
+  top: 10vw;
+  left: 10vh;
+  width: 90vw;
+  height: auto;
+  background-color: $secondary;
+  z-index: 3;
+  &__vista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  &__close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none;
+}

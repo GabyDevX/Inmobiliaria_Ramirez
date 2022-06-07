@@ -30,6 +30,12 @@ h3 {
 p {
   font-size: 2em; }
 
+a {
+  text-decoration: none;
+  color: inherit; }
+  a:hover {
+    color: inherit; }
+
 ::-webkit-scrollbar {
   width: 10px; }
 
@@ -214,3 +220,25 @@ footer {
     .propiedad__link:hover {
       background-color: #6b7a8f;
       border-color: #6b7a8f; }
+
+.carrito {
+  position: absolute;
+  top: 10vw;
+  left: 10vh;
+  width: 90vw;
+  height: auto;
+  background-color: #6b7a8f;
+  z-index: 3; }
+  .carrito__vista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+  .carrito__close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer; }
+
+.hidden {
+  display: none; }
