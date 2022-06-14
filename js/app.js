@@ -43,7 +43,7 @@ const carritoClose = document.getElementById('carrito__close')
 let propiedades = []
 const alquileres = []
 const ventas = []
-const carrito = []
+let carrito = []
 
 // Funcion utilizada para crear las propiedades, toma los valores por parametro y luego en base al tipo de propiedad utiliza al constructor de la clase Propiedad y la añade a su respectiva lista, luego la lista general de propiedades es el resultado de la concatenación de las listas de ventas y alquileres
 
@@ -113,6 +113,13 @@ const renderizarResumen = () => {
     .reduce((acc, val) => (acc > val ? acc : val))
 }
 
+// const renderizarCarrito = () => {
+//   carritoVista.innerHTML = ''
+//   for (const prop of carrito) {
+//     carritoVista.appendChild(plantillaCarrito(prop))
+//   }
+// }
+
 // Esta plantilla se encarga de devolver una estructura HTML con los detalles de una propiedad que se le envía por parametro
 
 const plantillaPropiedad = (prop) => {
@@ -168,9 +175,9 @@ const plantillaCarrito = (prop) => {
                         ${prop.direccion}
                       </p>
                     </div>
-                    
                       <li class="propiedad__item propiedad__item-precio list-group-item">
-                        ${prop.darPrecio()}
+                      ${prop.estado == 'alquiler' ? 'UYU ' : 'USD '} 
+                      ${prop.precio}
                       </li>
                     </ul>`
   return elemento
@@ -311,7 +318,10 @@ buttonList.addEventListener('click', (event) => {
   ) {
     const element = event.target.getAttribute('data-id')
     carrito.push(propiedades.find((el) => el.id == element))
+    console.log(propiedades.find((el) => el.id == element))
+    localStorage.setItem('carrito', JSON.stringify(carrito))
   }
+  // renderizarCarrito()
   carritoVista.innerHTML = ''
   for (const prop of carrito) {
     carritoVista.appendChild(plantillaCarrito(prop))
@@ -323,6 +333,13 @@ wishIcon.addEventListener('click', () => {
 })
 
 carritoClose.addEventListener('click', () => modal.classList.toggle('hidden'))
+
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
+// AÑADIR LA LOGICA PARA JSON Y LOCAL STORAGE CON EL CARRITO
 
 // Clase propiedad con su constructor y un metodo el cual se utilizará para dar el detalle del precio en función de si la propiedad es para venta o para alquiler
 
@@ -572,3 +589,11 @@ for (const venta of principalesVentas) {
 // Se llama a la función para que se ejecute al abrir la página
 
 renderizarResumen()
+
+if (localStorage.getItem('carrito')) {
+  carrito = JSON.parse(localStorage.getItem('carrito'))
+  console.log(carrito)
+  for (const prop of carrito) {
+    carritoVista.appendChild(plantillaCarrito(prop))
+  }
+}
