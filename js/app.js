@@ -39,6 +39,7 @@ const wishIcon = document.getElementById('wishIcon')
 const modal = document.getElementById('modal')
 const carritoVista = document.getElementById('carrito__vista')
 const carritoClose = document.getElementById('carrito__close')
+const carritoLimpiar = document.getElementById('carrito__limpiar')
 
 let propiedades = []
 const alquileres = []
@@ -317,6 +318,13 @@ buttonList.addEventListener('click', (event) => {
 })
 
 wishIcon.addEventListener('click', () => {
+  modal.classList.toggle('hidden')
+})
+
+carritoLimpiar.addEventListener('click', () => {
+  carrito = []
+  localStorage.setItem('carrito', JSON.stringify(carrito))
+  carritoVista.innerHTML = ''
   modal.classList.toggle('hidden')
 })
 
