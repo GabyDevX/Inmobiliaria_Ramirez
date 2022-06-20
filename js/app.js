@@ -153,7 +153,7 @@ const plantillaPropiedad = (prop) => {
                     </a>`
   return elemento
 }
-const plantillaCarrito = ({ tipo, estado, direccion, precio }) => {
+const plantillaCarrito = ({ tipo, estado, direccion, precio, id }) => {
   let elemento = document.createElement('div')
   elemento.className = 'propiedad card col-sm-12 col-md-3 col-lg-2'
   elemento.innerHTML = `<img
@@ -167,11 +167,15 @@ const plantillaCarrito = ({ tipo, estado, direccion, precio }) => {
                         ${direccion}
                       </p>
                     </div>
+                    <ul class="propiedad__lista list-group list-group-flush fs-5">
                       <li class="propiedad__item propiedad__item-precio list-group-item">
                       ${estado == 'alquiler' ? 'UYU ' : 'USD '} 
                       ${precio}
                       </li>
-                    </ul>`
+                    </ul>
+                    <a href="#" data-id="${id}" class="carrito__link fs-5 btn btn-primary">
+                      Eliminar
+                    </a>`
   return elemento
 }
 
@@ -308,24 +312,67 @@ buttonList.addEventListener('click', (event) => {
   ) {
     const element = event.target.getAttribute('data-id')
     carrito.push(propiedades.find((el) => el.id == element))
-    console.log(propiedades.find((el) => el.id == element))
     localStorage.setItem('carrito', JSON.stringify(carrito))
   }
   carritoVista.innerHTML = ''
   for (const prop of carrito) {
     carritoVista.appendChild(plantillaCarrito(prop))
   }
+  Toastify({
+    text: 'Añadiste una propiedad al carrito',
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: 'bottom', // `top` or `bottom`
+    position: 'right', // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      fontSize: '1.5rem',
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast()
 })
 
 wishIcon.addEventListener('click', () => {
   modal.classList.toggle('hidden')
 })
 
+carritoVista.addEventListener('click', (event) => {
+  event.preventDefault()
+  if (
+    event.target &&
+    event.target.tagName === 'A' &&
+    event.target.classList.contains('carrito__link')
+  ) {
+    const element = event.target.getAttribute('data-id')
+    carrito = carrito.filter((e) => e.id != element)
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+  }
+  carritoVista.innerHTML = ''
+  for (const prop of carrito) {
+    carritoVista.appendChild(plantillaCarrito(prop))
+  }
+  Toastify({
+    text: 'Eliminaste la propiedad',
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: 'bottom', // `top` or `bottom`
+    position: 'right', // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      fontSize: '1.5rem',
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast()
+})
+
 carritoLimpiar.addEventListener('click', () => {
   carrito = []
   localStorage.setItem('carrito', JSON.stringify(carrito))
   carritoVista.innerHTML = ''
-  modal.classList.toggle('hidden')
 })
 
 carritoClose.addEventListener('click', () => modal.classList.toggle('hidden'))
