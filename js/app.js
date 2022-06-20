@@ -313,25 +313,25 @@ buttonList.addEventListener('click', (event) => {
     const element = event.target.getAttribute('data-id')
     carrito.push(propiedades.find((el) => el.id == element))
     localStorage.setItem('carrito', JSON.stringify(carrito))
+    carritoVista.innerHTML = ''
+    for (const prop of carrito) {
+      carritoVista.appendChild(plantillaCarrito(prop))
+    }
+    Toastify({
+      text: 'Añadiste una propiedad al carrito',
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: 'bottom', // `top` or `bottom`
+      position: 'right', // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+        fontSize: '1.5rem',
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast()
   }
-  carritoVista.innerHTML = ''
-  for (const prop of carrito) {
-    carritoVista.appendChild(plantillaCarrito(prop))
-  }
-  Toastify({
-    text: 'Añadiste una propiedad al carrito',
-    duration: 3000,
-    newWindow: true,
-    close: true,
-    gravity: 'bottom', // `top` or `bottom`
-    position: 'right', // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: 'linear-gradient(to right, #00b09b, #96c93d)',
-      fontSize: '1.5rem',
-    },
-    onClick: function () {}, // Callback after click
-  }).showToast()
 })
 
 wishIcon.addEventListener('click', () => {
@@ -348,13 +348,30 @@ carritoVista.addEventListener('click', (event) => {
     const element = event.target.getAttribute('data-id')
     carrito = carrito.filter((e) => e.id != element)
     localStorage.setItem('carrito', JSON.stringify(carrito))
+    Toastify({
+      text: 'Eliminaste la propiedad',
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: 'bottom', // `top` or `bottom`
+      position: 'right', // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+        fontSize: '1.5rem',
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast()
+    carritoVista.innerHTML = ''
+    for (const prop of carrito) {
+      carritoVista.appendChild(plantillaCarrito(prop))
+    }
   }
-  carritoVista.innerHTML = ''
-  for (const prop of carrito) {
-    carritoVista.appendChild(plantillaCarrito(prop))
-  }
+})
+
+carritoLimpiar.addEventListener('click', () => {
   Toastify({
-    text: 'Eliminaste la propiedad',
+    text: 'Limpiaste el carrito',
     duration: 3000,
     newWindow: true,
     close: true,
@@ -367,9 +384,6 @@ carritoVista.addEventListener('click', (event) => {
     },
     onClick: function () {}, // Callback after click
   }).showToast()
-})
-
-carritoLimpiar.addEventListener('click', () => {
   carrito = []
   localStorage.setItem('carrito', JSON.stringify(carrito))
   carritoVista.innerHTML = ''
