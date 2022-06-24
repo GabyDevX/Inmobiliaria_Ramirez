@@ -8,8 +8,6 @@ const moneda = document.getElementsByName('moneda')
 const valorExtras = document.getElementById('extras')
 const crearBtn = document.getElementById('crear')
 
-let id = 0
-
 const propiedadesCantidad = document.getElementById('propiedadesCantidad')
 const ventaCantidad = document.getElementById('ventaCantidad')
 const alquilerCantidad = document.getElementById('alquilerCantidad')
@@ -42,8 +40,10 @@ const carritoClose = document.getElementById('carrito__close')
 const carritoLimpiar = document.getElementById('carrito__limpiar')
 
 let propiedades = []
-const alquileres = []
-const ventas = []
+let alquileres = []
+let ventas = []
+let principalesAlquileres = []
+let principalesVentas = []
 let carrito = JSON.parse(localStorage.getItem('carrito')) || []
 
 // Funcion utilizada para crear las propiedades, toma los valores por parametro y luego en base al tipo de propiedad utiliza al constructor de la clase Propiedad y la añade a su respectiva lista, luego la lista general de propiedades es el resultado de la concatenación de las listas de ventas y alquileres
@@ -140,7 +140,8 @@ const plantillaPropiedad = (prop) => {
                         prop.baños
                       } baños</li>
                       <li class="propiedad__item propiedad__item-precio list-group-item">
-                        ${prop.darPrecio()}
+                        ${prop.estado == 'alquiler' ? 'UYU ' : 'USD '} 
+                      ${prop.precio}
                       </li>
                       <li class="propiedad__item list-group-item">
                         ${prop.extras}
@@ -153,6 +154,7 @@ const plantillaPropiedad = (prop) => {
                     </a>`
   return elemento
 }
+
 const plantillaCarrito = ({ tipo, estado, direccion, precio, id }) => {
   let elemento = document.createElement('div')
   elemento.className = 'propiedad card col-sm-12 col-md-3 col-lg-2'
@@ -404,7 +406,7 @@ class Propiedad {
     moneda,
     extras,
   ) {
-    this.id = ++id
+    this.id = propiedades.length
     this.estado = estado
     this.tipo = tipo
     this.direccion = direccion
@@ -414,230 +416,61 @@ class Propiedad {
     this.moneda = moneda
     this.extras = extras
   }
+}
 
-  darPrecio() {
-    let str =
-      this.moneda == 'usd'
-        ? 'U$S ' + this.precio
-        : 'UYU ' + this.precio + '/Mes'
-    return str
+// Traemos los datos de las propiedades desde data.json
+
+const traerPropiedades = async () => {
+  const response = await fetch('../data/data.json')
+  const data = await response.json()
+  propiedades = data
+  alquileres = propiedades.filter((e) => e.estado === 'alquiler')
+  ventas = propiedades.filter((e) => e.estado === 'venta')
+
+  principalesAlquileres = alquileres.slice(0, 6)
+  for (const alquiler of principalesAlquileres) {
+    listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+  }
+
+  principalesVentas = ventas.slice(0, 6)
+  for (const venta of principalesVentas) {
+    listaVentas.appendChild(plantillaPropiedad(venta))
+  }
+
+  // Se llama a la función para que se ejecute al abrir la página
+
+  renderizarResumen()
+
+  for (const prop of carrito) {
+    carritoVista.appendChild(plantillaCarrito(prop))
   }
 }
 
-// Creación de propiedades para llenar las listas y poder mostrarlas en el navegador
+traerPropiedades()
 
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'canales 1268',
-  2,
-  1,
-  17000,
-  'uyu',
-  'terraza, garage',
-)
-crearPropiedad(
-  'venta',
-  'casa',
-  'andalucia 4597',
-  5,
-  2,
-  270000,
-  'usd',
-  'patio, terraza, garage, sotano',
-)
-crearPropiedad(
-  'alquiler',
-  'casa',
-  'tulipanes 7896',
-  4,
-  2,
-  30000,
-  'uyu',
-  'patio, garage',
-)
-crearPropiedad(
-  'venta',
-  'apartamento',
-  'magallanes 7589',
-  3,
-  1,
-  120000,
-  'usd',
-  'garage, parrillero, balcón, piscina compartida',
-)
-crearPropiedad(
-  'venta',
-  'casa',
-  'linqui 4287',
-  4,
-  2,
-  140000,
-  'usd',
-  'patio, terraza, garage',
-)
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'soles 2347',
-  2,
-  1,
-  19000,
-  'uyu',
-  'balcon',
-)
-crearPropiedad(
-  'venta',
-  'apartamento',
-  'linares 1209',
-  1,
-  1,
-  90000,
-  'usd',
-  'terraza, garage',
-)
-crearPropiedad(
-  'alquiler',
-  'casa',
-  'pinos 4574',
-  4,
-  2,
-  29500,
-  'uyu',
-  'patio, terraza, garage, parrillero',
-)
-crearPropiedad(
-  'venta',
-  'casa',
-  'olivares 9734',
-  6,
-  3,
-  190000,
-  'usd',
-  'patio, terraza, garage, parrillero, piscina',
-)
-crearPropiedad(
-  'alquiler',
-  'casa',
-  'colorado 1423',
-  4,
-  2,
-  35000,
-  'uyu',
-  'patio, garage',
-)
-crearPropiedad('venta', 'casa', 'orbes 1523', 5, 2, 102000, 'usd', 'patio')
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'pintado 1263',
-  3,
-  1,
-  21000,
-  'uyu',
-  'garage',
-)
-crearPropiedad(
-  'venta',
-  'apartamento',
-  'luna 7436',
-  5,
-  2,
-  120000,
-  'usd',
-  'patio',
-)
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'fundas 7081',
-  3,
-  1,
-  22000,
-  'uyu',
-  'balcon',
-)
-crearPropiedad(
-  'venta',
-  'apartamento',
-  'antimano 2309',
-  5,
-  2,
-  217000,
-  'usd',
-  'patio',
-)
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'cigales 1299',
-  3,
-  1,
-  26000,
-  'uyu',
-  'garage, patio',
-)
-crearPropiedad('venta', 'casa', 'alaces 5278', 5, 2, 100000, 'usd', 'patio')
-crearPropiedad('alquiler', 'casa', 'linares 2312', 3, 1, 22000, 'uyu', 'garage')
-crearPropiedad('venta', 'casa', 'colinas 2308', 5, 2, 92000, 'usd', 'patio')
-crearPropiedad(
-  'alquiler',
-  'casa',
-  'propios 983',
-  3,
-  1,
-  29000,
-  'uyu',
-  'garage, patio',
-)
-crearPropiedad('venta', 'casa', 'gines 9725', 5, 2, 80000, 'usd', 'patio')
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'viñas 4912',
-  3,
-  1,
-  18000,
-  'uyu',
-  'garage, patio',
-)
-crearPropiedad(
-  'venta',
-  'apartamento',
-  'cantes 2281',
-  5,
-  2,
-  78000,
-  'usd',
-  'balcon',
-)
-crearPropiedad(
-  'alquiler',
-  'apartamento',
-  'agraciada 4030',
-  3,
-  1,
-  30000,
-  'uyu',
-  'garage',
-)
+// fetch('../data/data.json')
+//   .then((resp) => resp.json())
+//   .then((data) => {
+//     propiedades = data
 
-// Por cada propiedad dentro de la lista filtrada, se añadirá una estructura HTML creada con la función en base a la propiedad que se esté iterando en ese momento.
+//     //Filtrar para guardar en alquileres y ventas
+//     alquileres = propiedades.filter((e) => e.estado === 'alquiler')
+//     ventas = propiedades.filter((e) => e.estado === 'venta')
+//     principalesAlquileres = alquileres.slice(0, 6)
+//     for (const alquiler of principalesAlquileres) {
+//       listaAlquileres.appendChild(plantillaPropiedad(alquiler))
+//     }
 
-const principalesAlquileres = alquileres.slice(0, 6)
-for (const alquiler of principalesAlquileres) {
-  listaAlquileres.appendChild(plantillaPropiedad(alquiler))
-}
+//     principalesVentas = ventas.slice(0, 6)
+//     for (const venta of principalesVentas) {
+//       listaVentas.appendChild(plantillaPropiedad(venta))
+//     }
 
-const principalesVentas = ventas.slice(0, 6)
-for (const venta of principalesVentas) {
-  listaVentas.appendChild(plantillaPropiedad(venta))
-}
+//     // Se llama a la función para que se ejecute al abrir la página
 
-// Se llama a la función para que se ejecute al abrir la página
+//     renderizarResumen()
 
-renderizarResumen()
-
-for (const prop of carrito) {
-  carritoVista.appendChild(plantillaCarrito(prop))
-}
+//     for (const prop of carrito) {
+//       carritoVista.appendChild(plantillaCarrito(prop))
+//     }
+//   })
