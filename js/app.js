@@ -421,7 +421,9 @@ class Propiedad {
 // Traemos los datos de las propiedades desde data.json
 
 const traerPropiedades = async () => {
-  const response = await fetch('../data/data.json')
+  const response = await fetch(
+    'https://gabydevx.github.io/Inmobiliaria_Ramirez/data/data.json',
+  )
   const data = await response.json()
   propiedades = data
   alquileres = propiedades.filter((e) => e.estado === 'alquiler')
