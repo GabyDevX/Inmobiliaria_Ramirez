@@ -232,7 +232,6 @@ crearBtn.addEventListener('click', () => {
 })
 
 // Se crean los eventos y se asignan a los botones de los listados para expandirlas
-// Unir los botones y poner condicional con nombre de clase
 
 alquileresExpandir.addEventListener('click', (event) => {
   event.preventDefault()
@@ -313,26 +312,44 @@ buttonList.addEventListener('click', (event) => {
     event.target.classList.contains('propiedad__link')
   ) {
     const element = event.target.getAttribute('data-id')
-    carrito.push(propiedades.find((el) => el.id == element))
-    localStorage.setItem('carrito', JSON.stringify(carrito))
-    carritoVista.innerHTML = ''
-    for (const prop of carrito) {
-      carritoVista.appendChild(plantillaCarrito(prop))
+
+    if (carrito.find((el) => el.id == element)) {
+      Toastify({
+        text: 'La propiedad ya se encuentra en tus favoritos',
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'bottom', // `top` or `bottom`
+        position: 'right', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: 'linear-gradient(to right, #00b09b, #96c93d)',
+          fontSize: '1.5rem',
+        },
+        onClick: function () {}, // Callback after click
+      }).showToast()
+    } else {
+      carrito.push(propiedades.find((el) => el.id == element))
+      localStorage.setItem('carrito', JSON.stringify(carrito))
+      carritoVista.innerHTML = ''
+      for (const prop of carrito) {
+        carritoVista.appendChild(plantillaCarrito(prop))
+      }
+      Toastify({
+        text: 'Añadiste una propiedad al carrito',
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'bottom', // `top` or `bottom`
+        position: 'right', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: 'linear-gradient(to right, #00b09b, #96c93d)',
+          fontSize: '1.5rem',
+        },
+        onClick: function () {}, // Callback after click
+      }).showToast()
     }
-    Toastify({
-      text: 'Añadiste una propiedad al carrito',
-      duration: 3000,
-      newWindow: true,
-      close: true,
-      gravity: 'bottom', // `top` or `bottom`
-      position: 'right', // `left`, `center` or `right`
-      stopOnFocus: true, // Prevents dismissing of toast on hover
-      style: {
-        background: 'linear-gradient(to right, #00b09b, #96c93d)',
-        fontSize: '1.5rem',
-      },
-      onClick: function () {}, // Callback after click
-    }).showToast()
   }
 })
 
@@ -449,30 +466,3 @@ const traerPropiedades = async () => {
 }
 
 traerPropiedades()
-
-// fetch('../data/data.json')
-//   .then((resp) => resp.json())
-//   .then((data) => {
-//     propiedades = data
-
-//     //Filtrar para guardar en alquileres y ventas
-//     alquileres = propiedades.filter((e) => e.estado === 'alquiler')
-//     ventas = propiedades.filter((e) => e.estado === 'venta')
-//     principalesAlquileres = alquileres.slice(0, 6)
-//     for (const alquiler of principalesAlquileres) {
-//       listaAlquileres.appendChild(plantillaPropiedad(alquiler))
-//     }
-
-//     principalesVentas = ventas.slice(0, 6)
-//     for (const venta of principalesVentas) {
-//       listaVentas.appendChild(plantillaPropiedad(venta))
-//     }
-
-//     // Se llama a la función para que se ejecute al abrir la página
-
-//     renderizarResumen()
-
-//     for (const prop of carrito) {
-//       carritoVista.appendChild(plantillaCarrito(prop))
-//     }
-//   })
